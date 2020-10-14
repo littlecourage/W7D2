@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Balsamiq Sans', cursive;
+      }
+
+      .nav{
+        display: flex;
+        float: right;
+        background-color: pink;
+        border-radius: 1px;
+        text-decoration: none;
+      }
+      .sub_title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+    
+    <title>MyMusicApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <div id="main">
+    <h1 class="title">Welcome to My Music App!</h1>
+    <% if logged_in? %>
+      <h2>Hey there, <%= current_user.email %></h2>
+      <form action="<%= session_url %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+        <input type="submit" value="Logout">
+      </form>
+    <% else %>
+      <br>
+      <br>
+      <a class="nav" href="<%= new_session_url %>">Login</a>
+      <br>
+      <a class="nav" href="<%= new_user_url %>">Sign Up</a>
+    <% end %>
+    <%= yield %>
+  </div>
+  </body>
+</html>
